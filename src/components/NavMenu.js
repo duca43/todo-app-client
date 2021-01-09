@@ -1,5 +1,6 @@
-import { Nav, Navbar } from 'react-bootstrap';
+import { Button, Nav, Navbar } from 'react-bootstrap';
 import logo from '../logo.svg'
+import { history } from "../App";
 
 function NavMenu() {
   return (
@@ -18,6 +19,13 @@ function NavMenu() {
       <Nav className="mr-auto">
         <Nav.Link href="/">Home</Nav.Link>
       </Nav>
+      
+      <Button className="mx-2" onClick={() => history.push("/registration")}>
+        <i className="fa fa-user-plus"></i> Sign Up
+      </Button>
+      <Button className="mx-2">
+        <i className="fa fa-sign-in"></i> Sign In
+      </Button>
     </Navbar>
   );
 }

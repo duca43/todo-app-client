@@ -5,10 +5,13 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound'
 import { createBrowserHistory } from 'history';
 import Registration from './pages/Registration';
+import Login from './pages/Login';
+import PublicRoute from './components/PublicRoute';
 
 export const history = createBrowserHistory();
 
 function App() {
+
   return (
     <Router history={ history }>
       <NavMenu />
@@ -16,9 +19,8 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route exact path="/registration">
-          <Registration />
-        </Route>
+        <PublicRoute exact path="/signup" restricted={true} component={Registration} />
+        <PublicRoute exact path="/signin" restricted={true} component={Login} />
         <Route path="*">
           <NotFound />
         </Route>

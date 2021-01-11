@@ -1,5 +1,13 @@
+import { PUT_LOGGED_USER } from '../constants';
+import * as updateStateFunctions from './update-state-functions';
+
 const initialState = {
-  user: {}
+  userData: {},
+  userLogged: {
+    username: localStorage.getItem('username'),
+    id: localStorage.getItem('userId'),
+    token: localStorage.getItem('token')
+  }
 };
 
 const userReducer = (state = initialState, { type, payload }) => {
@@ -11,7 +19,7 @@ const userReducer = (state = initialState, { type, payload }) => {
 };
 
 const actionHandler = {
-  
+  [PUT_LOGGED_USER]: updateStateFunctions.putLoggedUser
 };
 
 export default userReducer;

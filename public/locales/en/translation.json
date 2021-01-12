@@ -1,5 +1,7 @@
 {
     "title": "Welcome to TodoApp",
     "subtitle": "Enjoy searching our website :)",
-    "not_found_message": "Oops! Page not found!"
+    "not_found_message": "Oops! Page not found!",
+    "close": "Close",
+    "confirm": "Confirm"
 }

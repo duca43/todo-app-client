@@ -1,5 +1,7 @@
 {
     "title": "Dobrodošli na TodoApp",
     "subtitle": "Uživajte u pretraživanju našeg vebsajta :)",
-    "not_found_message": "Ups! Stranica nije pronađena!"
+    "not_found_message": "Ups! Stranica nije pronađena!",
+    "close": "Zatvori",
+    "confirm": "Potvrdi"
 }

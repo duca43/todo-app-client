@@ -1,0 +1,16 @@
+{
+    "no_todos_message": "You have no any To do yet",
+    "create_todo": "Create To Do",
+    "create_new_todo": "Create new To Do",
+    "title": "Title",
+    "priority": "Priority",
+    "description": "Description",
+    "completed": "Completed",
+    "edit": "Edit",
+    "update_todo": "Update To Do",
+    "delete_todo": "Delete To Do",
+    "delete_todo_message": "Are you sure you want to delete To do",
+    "title_max": "Title is too Long!",
+    "title_required": "Title is required!",
+    "description_max": "Description is too Long!"
+}

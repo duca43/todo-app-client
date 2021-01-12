@@ -1,17 +1,10 @@
 import { Formik } from "formik";
 import { Button, Container, Form, Row } from "react-bootstrap";
-import * as Yup from 'yup';
 import { useDispatch } from "react-redux";
 import { login } from "../store/user/actions"
 import { history } from "../App";
 import { useState } from "react";
-
-const LoginSchema = Yup.object().shape({
-  username: Yup.string()
-    .required('Username is required!'),
-  password: Yup.string()
-    .required('Password is required!'),
-});
+import { useTranslation } from 'react-i18next';
 
 const initialValues = {
   username: '',
@@ -22,6 +15,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const [passwordType, setPasswordType] = useState('password');
+  const { t } = useTranslation(['sign_forms']);
 
   const handleFormSubmit = (values) => {
     const credentials = {
@@ -41,30 +35,29 @@ const Login = () => {
   return (
     <Container fluid>
       <Row className="justify-content-center mt-4">
-        <h2>Sign In</h2>
+        <h2>{ t('sign_in_title') }</h2>
       </Row>
       <Row className="justify-content-center mt-4">
-      <Formik initialValues = { initialValues } 
-        validationSchema = { LoginSchema }
+      <Formik initialValues = { initialValues }
         onSubmit = { values => handleFormSubmit(values) }
         >
           {({ values, handleSubmit, handleChange }) => (
             <Form noValidate onSubmit={ handleSubmit } className="w-25">
               <Form.Group controlId="username">
-                <Form.Label>Username</Form.Label>
+                <Form.Label>{ t('username') }</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Username"
+                  placeholder={ t('username') }
                   name="username"
                   value={ values.username }
                   onChange={ handleChange }
                 />
               </Form.Group>
               <Form.Group controlId="password">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>{ t('password') }</Form.Label>
                 <Form.Control
                   type={ passwordType }
-                  placeholder="Password"
+                  placeholder={ t('password') }
                   name="password"
                   value={ values.password }
                   onChange={ handleChange }
@@ -73,11 +66,11 @@ const Login = () => {
               <Form.Check 
                 type='checkbox'
                 id='showPassword'
-                label='Show password'
+                label={ t('show_password') }
                 onClick={() => passwordType === 'password' ? setPasswordType('text') : setPasswordType('password')}
               />
               <Form.Row className="justify-content-center mt-4">
-                <Button type="submit">Sign In</Button>
+                <Button type="submit">{ t('navmenu:sign_in') }</Button>
               </Form.Row>
             </Form>
           )}

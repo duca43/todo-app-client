@@ -1,0 +1,16 @@
+{
+    "no_todos_message": "Još uvek nemate nijedan zadatak",
+    "create_todo": "Kreiraj zadatak",
+    "create_new_todo": "Kreiraj novi zadatak",
+    "title": "Naziv",
+    "priority": "Prioritet",
+    "description": "Opis",
+    "completed": "Završen",
+    "edit": "Izmeni",
+    "update_todo": "Izmena zadatka",
+    "delete_todo": "Brisanje zadatka",
+    "delete_todo_message": "Da li ste sigurni da želite da obrišete zadatak",
+    "title_max": "Naziv je predugačak!",
+    "title_required": "Obavezno je uneti naziv!",
+    "description_max": "Opis je predugačak!"
+}

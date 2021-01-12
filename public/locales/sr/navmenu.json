@@ -1,3 +1,7 @@
 {
-    "home_link": "Početna"
+    "home_link": "Početna",
+    "todo_link": "Lista zadataka",
+    "sign_up": "Registruj se",
+    "sign_in": "Prijavi se",
+    "sign_out": "Odjavi se"
 }

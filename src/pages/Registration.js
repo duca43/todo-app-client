@@ -4,35 +4,7 @@ import * as Yup from 'yup';
 import { useDispatch } from "react-redux";
 import { registerUser } from "../store/user/actions"
 import { history } from "../App";
-
-const RegistrationSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(4, 'Username is too short!')
-    .max(150, 'Username is too Long!')
-    .required('Username is required!'),
-  password: Yup.string()
-    .min(8, 'Password is too short!')
-    .max(128, 'Password is too long!')
-    .required('Password is required!'),
-  first_name: Yup.string()
-    .min(2, 'First name is too short!')
-    .max(150, 'First name is too long!')
-    .required('First name is required!'),
-  last_name: Yup.string()
-    .min(2, 'Last name is too short!')
-    .max(150, 'Last name is too long!')
-    .required('Last name is required!'),
-  email: Yup.string()
-    .email('Invalid email format!')
-    .max(254, 'Email is too long!')
-    .required('Email is required!'),
-  address: Yup.string()
-    .max(100, 'Address is too long!'),
-  city: Yup.string()
-    .max(50, 'City name is too long!'),
-  country: Yup.string()
-    .max(50, 'Country name is too long!'),
-});
+import { useTranslation } from 'react-i18next';
 
 const initialValues = {
   username: '',
@@ -48,21 +20,41 @@ const initialValues = {
 const Registration = () => {
 
   const dispatch = useDispatch();
+  const { t } = useTranslation(['sign_forms']);
+
+  const RegistrationSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(4, t('username_min'))
+      .max(150, t('username_max'))
+      .required(t('username_required')),
+    password: Yup.string()
+      .min(8, t('password_min'))
+      .max(128, t('password_max'))
+      .required(t('password_required')),
+    first_name: Yup.string()
+      .min(2, t('first_name_min'))
+      .max(150, t('first_name_max'))
+      .required(t('first_name_required')),
+    last_name: Yup.string()
+      .min(2, t('last_name_min'))
+      .max(150, t('last_name_max'))
+      .required(t('last_name_required')),
+    email: Yup.string()
+      .email(t('email_invalid'))
+      .max(254, t('email_max'))
+      .required(t('email_required')),
+    address: Yup.string()
+      .max(100, t('address_max')),
+    city: Yup.string()
+      .max(50, t('city_max')),
+    country: Yup.string()
+      .max(50, t('country_max')),
+  });
 
   const handleFormSubmit = (values) => {
-    const registrationData = {
-      username: values.username,
-      password: values.password,
-      email: values.email,
-      first_name: values.first_name,
-      last_name: values.last_name,
-      address: values.address,
-      city: values.city,
-      country: values.country
-    }
     dispatch(
       registerUser({
-        ...registrationData,
+        ...values,
         callback: () => {
           history.push("/");
         }
@@ -73,7 +65,7 @@ const Registration = () => {
   return (
     <Container fluid>
       <Row className="justify-content-center mt-4">
-        <h2>Sign Up to our TodoApp</h2>
+        <h2>{ t('sign_up_title') }</h2>
       </Row>
       <Row className="justify-content-center mt-4">
       <Formik initialValues = { initialValues } 
@@ -84,10 +76,10 @@ const Registration = () => {
             <Form noValidate onSubmit={ handleSubmit } className="w-50">
               <Form.Row>
                 <Form.Group as={ Col } md="6" controlId="firstName">
-                  <Form.Label>First name</Form.Label>
+                  <Form.Label>{ t('first_name') }</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="First name"
+                    placeholder={ t('first_name') }
                     name="first_name"
                     value={ values.first_name }
                     onChange={ handleChange }
@@ -99,10 +91,10 @@ const Registration = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={ Col } md="6" controlId="lastName">
-                  <Form.Label>Last name</Form.Label>
+                  <Form.Label>{ t('last_name') }</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Last name"
+                    placeholder={ t('last_name') }
                     name="last_name"
                     value={ values.last_name }
                     onChange={ handleChange }
@@ -116,10 +108,10 @@ const Registration = () => {
               </Form.Row>
               <Form.Row>
                 <Form.Group as={ Col } md="6" controlId="username">
-                  <Form.Label>Username</Form.Label>
+                  <Form.Label>{ t('username') }</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Username"
+                    placeholder={ t('username') }
                     name="username"
                     value={ values.username }
                     onChange={ handleChange }
@@ -131,10 +123,10 @@ const Registration = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={ Col } md="6" controlId="password">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>{ t('password') }</Form.Label>
                   <Form.Control
                     type="password"
-                    placeholder="Password"
+                    placeholder={ t('password') }
                     name="password"
                     value={ values.password }
                     onChange={ handleChange }
@@ -148,10 +140,10 @@ const Registration = () => {
               </Form.Row>
               <Form.Row>
                 <Form.Group as={ Col } md="6" controlId="email">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>{ t('email') }</Form.Label>
                   <Form.Control
                     type="email"
-                    placeholder="Email"
+                    placeholder={ t('email') }
                     name="email"
                     value={ values.email }
                     onChange={ handleChange }
@@ -163,10 +155,10 @@ const Registration = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={ Col } md="6" controlId="address">
-                  <Form.Label>Address</Form.Label>
+                  <Form.Label>{ t('address') }</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Address"
+                    placeholder={ t('address') }
                     name="address"
                     value={ values.address }
                     onChange={ handleChange }
@@ -180,10 +172,10 @@ const Registration = () => {
               </Form.Row>
               <Form.Row>
               <Form.Group as={ Col } md="6" controlId="city">
-                  <Form.Label>City</Form.Label>
+                  <Form.Label>{ t('city') }</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="City"
+                    placeholder={ t('city') }
                     name="city"
                     value={ values.city }
                     onChange={ handleChange }
@@ -195,10 +187,10 @@ const Registration = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={ Col } md="6" controlId="country">
-                  <Form.Label>Country</Form.Label>
+                  <Form.Label>{ t('country') }</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Country"
+                    placeholder={ t('country') }
                     name="country"
                     value={ values.country }
                     onChange={ handleChange }
@@ -211,7 +203,7 @@ const Registration = () => {
                 </Form.Group>
               </Form.Row>
               <Form.Row className="justify-content-center mt-3">
-                <Button type="submit">Sign Up</Button>
+                <Button type="submit">{ t('navmenu:sign_up') }</Button>
               </Form.Row>
             </Form>
           )}

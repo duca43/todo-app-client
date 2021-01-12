@@ -1,3 +1,7 @@
 {
-    "home_link": "Home"
+    "home_link": "Home",
+    "todo_link": "To do list",
+    "sign_up": "Sign Up",
+    "sign_in": "Sign In",
+    "sign_out": "Sign out"
 }

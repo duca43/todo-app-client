@@ -16,11 +16,11 @@ const styles = {
 };
 
 const languages = {
-  en: {
+  'en-US': {
     country_code: "GB",
     title: "English"
   },
-  sr: {
+  'sr': {
     country_code: "RS",
     title: "Srpski"
   }
@@ -68,7 +68,7 @@ function NavMenu() {
       
       <Nav className="mr-auto">
         <Nav.Link href="/">{ t('home_link') }</Nav.Link>
-        {token && <Nav.Link href="/todo">To do</Nav.Link>}
+        {token && <Nav.Link href="/todo">{ t('todo_link') }</Nav.Link>}
       </Nav>
 
       { value &&
@@ -82,14 +82,15 @@ function NavMenu() {
                   /> }
           onSelect={handleSelect} 
           alignRight
-          variant="outline-primary">
-          <Dropdown.Item eventKey="en">
+          variant="outline-primary"
+          className="mx-2">
+          <Dropdown.Item eventKey="en-US">
             <ReactCountryFlag 
-              countryCode={ languages['en'].country_code } 
+              countryCode={ languages['en-US'].country_code } 
               svg 
-              style={ styles.flag } title={ languages['en'].title } 
+              style={ styles.flag } title={ languages['en-US'].title } 
               className="mr-2"/> 
-              { languages['en'].title }
+              { languages['en-US'].title }
           </Dropdown.Item>
           <Dropdown.Item eventKey="sr">
           <ReactCountryFlag 
@@ -105,10 +106,10 @@ function NavMenu() {
       {!token &&
           <div>
             <Button className="mx-2" onClick={() => history.push("/signup")}>
-              <i className="fa fa-user-plus"></i> Sign Up
+              <i className="fa fa-user-plus"></i> { t('sign_up') }
             </Button>
             <Button className="mx-2" onClick={() => history.push("/signin")}>
-              <i className="fa fa-sign-in"></i> Sign In
+              <i className="fa fa-sign-in"></i> { t('sign_in') }
             </Button>
           </div>
        }
@@ -118,7 +119,7 @@ function NavMenu() {
               <i className="fa fa-user mr-1"></i> { username }
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={ handleLogout }>Logout</Dropdown.Item>
+              <Dropdown.Item onClick={ handleLogout }>{ t('sign_out') }</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
        }

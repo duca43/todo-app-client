@@ -6,8 +6,8 @@ function Home() {
 
     return (
       <Jumbotron>
-        <h1 className="display-3 mb-3">{ t("title") }</h1>
-        <p className="lead">{ t("subtitle") }</p>
+        <h1 className="display-3 mb-3 ml-4">{ t("title") }</h1>
+        <p className="lead ml-4">{ t("subtitle") }</p>
       </Jumbotron>
     );
   }

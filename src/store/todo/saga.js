@@ -1,6 +1,11 @@
-import { GET_TODOS, CREATE_TODO, UPDATE_TODO, PATCH_TODO } from "./constants";
+import { 
+    GET_TODOS,
+    CREATE_TODO,
+    UPDATE_TODO,
+    PATCH_TODO,
+    DELETE_TODO } from "./constants";
 import { call, put, take } from "redux-saga/effects";
-import { putTodos, putNewTodo, putUpdatedTodo } from "./actions"
+import { putTodos, putNewTodo, putUpdatedTodo, deleteTodoById } from "./actions"
 import todoService from "../../services/api/Todo"
 
 export function* getTodos() {
@@ -29,6 +34,13 @@ export function* patchTodo() {
     yield put(putUpdatedTodo(data));
 }
 
-const todoSagas = [getTodos, createTodo, updateTodo, patchTodo];
+export function* deleteTodo() {
+    const { payload } = yield take(DELETE_TODO);
+    yield call(todoService.deleteTodo, payload);
+    yield put(deleteTodoById(payload.id));
+    payload.callback();
+}
+
+const todoSagas = [getTodos, createTodo, updateTodo, patchTodo, deleteTodo];
 
 export default todoSagas;

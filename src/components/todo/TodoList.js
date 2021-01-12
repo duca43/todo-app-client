@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Row, Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getTodos, patchTodo } from "../../store/todo/actions"
+import { getTodos, patchTodo, deleteTodo } from "../../store/todo/actions"
 import { todosSelector } from "../../store/todo/selectors"
 import { PRIORITIES } from "../../util/todo"
 import UpdateTodo from "./UpdateTodo";
@@ -18,14 +18,23 @@ function TodoList() {
   const dispatch = useDispatch();
   const todos = useSelector(todosSelector);
   const [todoModalVisibility, setTodoModalVisibility] = useState(false);
-  const [editingTodo, setEditingTodo] = useState();
+  const [selectedTodo, setSelectedTodo] = useState();
+  const [deleteTodoModalVisibility, setDeleteTodoModalVisibility] = useState(false);
 
-  const displayModal = () => setTodoModalVisibility(true);
-  const closeModal = () => setTodoModalVisibility(false);
+  const displayTodoModal = () => setTodoModalVisibility(true);
+  const closeTodoModal = () => setTodoModalVisibility(false);
 
-  const updateTodo = (todo) => {
-    setEditingTodo(todo);
-    displayModal();
+  const displayDeleteTodoModal = () => setDeleteTodoModalVisibility(true);
+  const closeDeleteTodoModal = () => setDeleteTodoModalVisibility(false);
+
+  const openUpdateTodoDialog = (todo) => {
+    setSelectedTodo(todo);
+    displayTodoModal();
+  }
+
+  const openDeleteTodoDialog = (todo) => {
+    setSelectedTodo(todo);
+    displayDeleteTodoModal();
   }
 
   useEffect(() => {
@@ -41,6 +50,17 @@ function TodoList() {
     );
   }
 
+  const handleTodoDeleting = () => {
+    dispatch(
+      deleteTodo({
+        id: selectedTodo.id,
+        callback: () => {
+          closeDeleteTodoModal();
+        }
+      })
+    );
+  }
+
   return (
     <Row className="w-100">
       {todos && todos.length === 0 ? 
@@ -49,7 +69,7 @@ function TodoList() {
         todos.map(todo => (
           <Card className="mx-5 mb-5 w-25" key={ todo.id }>
             <Card.Header className='text-center'>
-              <Button className='badge badge-pill badge-danger' style={ todoCardStyle }>
+              <Button className='badge badge-pill badge-danger' style={ todoCardStyle } onClick={() => openDeleteTodoDialog(todo)}>
                   <i className="fa fa-times"></i>
               </Button>
               { todo.title }
@@ -70,18 +90,32 @@ function TodoList() {
                 checked={ todo.completed }
                 onChange={() => handleTodoCompletion(todo)} 
               />
-              <Card.Link role="button" onClick={() => updateTodo(todo)}><i className="fa fa-pencil mr-1"></i> Edit</Card.Link>
+              <Card.Link role="button" onClick={() => openUpdateTodoDialog(todo)}>
+                <i className="fa fa-pencil mr-1"></i> Edit
+              </Card.Link>
             </Card.Footer>
           </Card>
         ))
       }
       <Modal show={ todoModalVisibility }>
-        <Modal.Header closeButton onHide={ closeModal }>
+        <Modal.Header closeButton onHide={ closeTodoModal }>
             <Modal.Title>Update To do</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <UpdateTodo closeModal={ closeModal } todo={ editingTodo } />
+          <UpdateTodo closeModal={ closeTodoModal } todo={ selectedTodo } />
         </Modal.Body>
+      </Modal>
+      <Modal show={ deleteTodoModalVisibility }>
+        <Modal.Header closeButton onHide={ closeDeleteTodoModal }>
+            <Modal.Title>Delete To do</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to delete To do <b>{ selectedTodo && selectedTodo.title }</b>?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="light" className="mx-2" onClick={ closeDeleteTodoModal }>Close</Button>
+          <Button variant="danger" className="mx-2" onClick={ handleTodoDeleting }>Confirm</Button>
+        </Modal.Footer>
       </Modal>
     </Row>
   );

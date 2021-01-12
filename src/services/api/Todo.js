@@ -20,6 +20,10 @@ class TodoService extends HttpBaseClient {
   patchTodo = todo => {
     return this.getApiClient().patch(ENDPOINTS.TODOS + todo.id + '/', todo);
   }
+
+  deleteTodo = (todo) => {
+    return this.getApiClient().delete(ENDPOINTS.TODOS + todo.id + '/');
+  }
 }
 
 export default new TodoService();

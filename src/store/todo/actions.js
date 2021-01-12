@@ -5,7 +5,9 @@ import {
     PUT_NEW_TODO, 
     UPDATE_TODO, 
     PUT_UPDATED_TODO, 
-    PATCH_TODO
+    PATCH_TODO,
+    DELETE_TODO,
+    DELETE_TODO_BY_ID
 } from "./constants";
 
 export const getTodos = () => ({
@@ -39,5 +41,15 @@ export const putUpdatedTodo = (payload) => ({
 
 export const patchTodo = (payload) => ({
     type: PATCH_TODO,
+    payload
+});
+
+export const deleteTodo = (payload) => ({
+    type: DELETE_TODO,
+    payload
+});
+
+export const deleteTodoById = (payload) => ({
+    type: DELETE_TODO_BY_ID,
     payload
 });

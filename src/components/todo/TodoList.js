@@ -26,7 +26,7 @@ function TodoList() {
   }
 
   return (
-    <Row>
+    <Row className="w-100">
       {todos && todos.length === 0 ? 
         <h1>You have no any To do yet</h1>
         :

@@ -36,6 +36,7 @@ function NavMenu() {
       
       <Nav className="mr-auto">
         <Nav.Link href="/">Home</Nav.Link>
+        {token && <Nav.Link href="/todo">To do</Nav.Link>}
       </Nav>
       {!token &&
           <div>

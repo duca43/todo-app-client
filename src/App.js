@@ -6,7 +6,9 @@ import NotFound from './pages/NotFound'
 import { createBrowserHistory } from 'history';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
-import PublicRoute from './components/PublicRoute';
+import PublicRoute from './components/routes/PublicRoute';
+import PrivateRoute from './components/routes/PrivateRoute';
+import Todo from './pages/Todo';
 
 export const history = createBrowserHistory();
 
@@ -21,6 +23,7 @@ function App() {
         </Route>
         <PublicRoute exact path="/signup" restricted={true} component={Registration} />
         <PublicRoute exact path="/signin" restricted={true} component={Login} />
+        <PrivateRoute exact path="/todo" component={Todo} />
         <Route path="*">
           <NotFound />
         </Route>

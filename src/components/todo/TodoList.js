@@ -1,9 +1,10 @@
-import { useEffect } from "react";
-import { Card, Row, Button, Form } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Card, Row, Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getTodos } from "../../store/todo/actions"
+import { getTodos, patchTodo } from "../../store/todo/actions"
 import { todosSelector } from "../../store/todo/selectors"
 import { PRIORITIES } from "../../util/todo"
+import UpdateTodo from "./UpdateTodo";
 
 const todoCardStyle = {
   position: 'absolute',
@@ -16,13 +17,28 @@ function TodoList() {
 
   const dispatch = useDispatch();
   const todos = useSelector(todosSelector);
+  const [todoModalVisibility, setTodoModalVisibility] = useState(false);
+  const [editingTodo, setEditingTodo] = useState();
+
+  const displayModal = () => setTodoModalVisibility(true);
+  const closeModal = () => setTodoModalVisibility(false);
+
+  const updateTodo = (todo) => {
+    setEditingTodo(todo);
+    displayModal();
+  }
 
   useEffect(() => {
     dispatch(getTodos());
   }, [dispatch]);
 
-  const handleTodoCompletion = (completed) => {
-    console.log(completed);
+  const handleTodoCompletion = (todo) => {
+    dispatch(
+      patchTodo({
+        id: todo.id,
+        completed: !todo.completed
+      })
+    );
   }
 
   return (
@@ -51,14 +67,22 @@ function TodoList() {
                 type='checkbox'
                 id={'completed' + (todo.id)}
                 label='Completed'
-                defaultChecked={ todo.completed }
-                onClick={() => handleTodoCompletion(todo.completed)} 
+                checked={ todo.completed }
+                onChange={() => handleTodoCompletion(todo)} 
               />
-              <Card.Link role="button"><i className="fa fa-pencil mr-1"></i> Edit</Card.Link>
+              <Card.Link role="button" onClick={() => updateTodo(todo)}><i className="fa fa-pencil mr-1"></i> Edit</Card.Link>
             </Card.Footer>
           </Card>
         ))
       }
+      <Modal show={ todoModalVisibility }>
+        <Modal.Header closeButton onHide={ closeModal }>
+            <Modal.Title>Update To do</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <UpdateTodo closeModal={ closeModal } todo={ editingTodo } />
+        </Modal.Body>
+      </Modal>
     </Row>
   );
 }

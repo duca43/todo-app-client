@@ -1,4 +1,4 @@
-import { PUT_TODOS, PUT_NEW_TODO } from '../constants';
+import { PUT_TODOS, PUT_NEW_TODO, PUT_UPDATED_TODO } from '../constants';
 import * as updateStateFunctions from './update-state-functions';
 
 const initialState = {
@@ -15,7 +15,8 @@ const todoReducer = (state = initialState, { type, payload }) => {
 
 const actionHandler = {
   [PUT_TODOS]: updateStateFunctions.putTodos,
-  [PUT_NEW_TODO]: updateStateFunctions.putNewTodo
+  [PUT_NEW_TODO]: updateStateFunctions.putNewTodo,
+  [PUT_UPDATED_TODO]: updateStateFunctions.putUpdatedTodo
 };
 
 export default todoReducer;

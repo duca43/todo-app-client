@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Container, Modal, Row } from "react-bootstrap";
-import TodoForm from "../components/todo/TodoForm";
+import CreateTodo from "../components/todo/CreateTodo";
 import TodoList from '../components/todo/TodoList'
 
 function Todo() {
@@ -24,7 +24,7 @@ function Todo() {
             <Modal.Title>Create new To do</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <TodoForm closeModal={ closeModal } />
+          <CreateTodo closeModal={ closeModal } />
         </Modal.Body>
       </Modal>
     </Container>

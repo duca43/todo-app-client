@@ -1,8 +1,6 @@
 import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
 import * as Yup from 'yup';
-import { useDispatch } from "react-redux";
-import { createTodo } from "../../store/todo/actions"
 import { PRIORITIES } from "../../util/todo"
 
 const TodoSchema = Yup.object().shape({
@@ -13,35 +11,7 @@ const TodoSchema = Yup.object().shape({
     .max(200, 'Description is too long!')
 });
 
-const initialValues = {
-  title: '',
-  description: '',
-  priority: 'NP',
-  completed: false
-};
-
-const TodoForm = ({ closeModal }) => {
-
-  const dispatch = useDispatch();
-
-  const handleFormSubmit = (values) => {
-    const todoData = {
-      title: values.title,
-      description: values.description,
-      priority: values.priority,
-      completed: values.completed
-    }
-    dispatch(
-      createTodo({
-        ...todoData,
-        callback: () => {
-          closeModal();
-        }
-      })
-    );
-  }
-
-  return (
+const TodoForm = ({ closeModal, initialValues , handleFormSubmit }) => (
     <Formik initialValues = { initialValues } 
         validationSchema = { TodoSchema }
         onSubmit = { values => handleFormSubmit(values) }
@@ -100,18 +70,18 @@ const TodoForm = ({ closeModal }) => {
                     id="completed"
                     name="completed"
                     label="Completed"
+                    defaultChecked={ values.completed }
                     value={ values.completed }
                     onChange={ handleChange }
                 />
             </Form.Group>
             <Form.Row className="justify-content-center mt-3">
-                <Button type="submit" className="mx-2">Create</Button>
+                <Button type="submit" className="mx-2">Confirm</Button>
                 <Button variant="secondary" className="mx-2" onClick={ closeModal }>Close</Button>
             </Form.Row>
         </Form>
     )}
     </Formik>
-  );
-};
+);
   
 export default TodoForm;
